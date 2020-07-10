@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "server": "nodemon  server.js",
+    "server": "nodemon server.js",
     "build": "set NODE_ENV=production&&nodemon server.js",
     "debug": "ndb server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently  \"npm run server\"   \"npm run client\"",
     "prod": "concurrently  \"npm run build\"   \"npm run client\"",
-    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+    "h-build": "cd client && npm run build",
+    "h-installClient": "cd client && npm  install",
+    "heroku-postbuild": "npm run h-installClient && npm run install h-build"
   },
   "keywords": [],
   "author": "",
