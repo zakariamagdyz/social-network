@@ -21,9 +21,9 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/profiles", profileRouter);
 app.use("/api/v1/posts", postRouter);
 
-app.all("*", function (req, res, next) {
-  return next(new HttpError("This route is not valid!", 404));
-});
+// app.all("*", function (req, res, next) {
+//   return next(new HttpError("This route is not valid!", 404));
+// });
 
 if (process.env.NODE_ENV === "production") {
   // Set static folder
