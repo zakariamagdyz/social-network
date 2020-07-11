@@ -11,8 +11,10 @@ process.on("uncaughtException", (err) => {
 
 const app = require("./app");
 
+const db = process.env.MONGO_URI || process.env.DATABASE_STRING;
+
 mongoose
-  .connect(process.env.MONGO_URI, {
+  .connect(db, {
     useFindAndModify: false,
     useUnifiedTopology: true,
     useNewUrlParser: true,
