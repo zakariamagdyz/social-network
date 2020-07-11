@@ -5,8 +5,8 @@ const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const User = require("../Models/User");
 const HttpError = require("../Utils/HttpError");
-const catchAsync = require("../utils/catchAsync");
-const selectFields = require("../utils/selectFields");
+const catchAsync = require("../Utils/catchAsync");
+const selectFields = require("../Utils/selectFields");
 const sendEmail = require("../Utils/email");
 
 exports.signUp = catchAsync(async (req, res, next) => {
