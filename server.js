@@ -10,13 +10,9 @@ process.on("uncaughtException", (err) => {
 });
 
 const app = require("./app");
-const db = process.env.MONGO_URI.replace(
-  "<password>",
-  process.env.DATABASE_Password
-);
 
 mongoose
-  .connect(db, {
+  .connect(process.env.MONGO_URI, {
     useFindAndModify: false,
     useUnifiedTopology: true,
     useNewUrlParser: true,
