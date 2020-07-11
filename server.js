@@ -10,7 +10,7 @@ process.on("uncaughtException", (err) => {
 });
 
 const app = require("./app");
-const db = process.env.DATABASE_STRING.replace(
+const db = process.env.MONGO_URI.replace(
   "<password>",
   process.env.DATABASE_Password
 );
