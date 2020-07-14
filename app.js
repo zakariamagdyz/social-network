@@ -15,8 +15,6 @@ if (process.env.NODE_ENV === "development") {
 
 app.use(express.json());
 
-app.use(express.static("Client/build"));
-
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/profiles", profileRouter);
 app.use("/api/v1/posts", postRouter);

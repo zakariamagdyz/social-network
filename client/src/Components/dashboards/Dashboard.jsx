@@ -14,7 +14,7 @@ const Dashboard = () => {
   }, []);
 
   const { user } = useSelector((state) => state.auth);
-  const { loading, profile } = useSelector((state) => state.profile);
+  const { loadingProfile, profile } = useSelector((state) => state.profile);
 
   const dashboardContent = (
     <Fragment>
@@ -51,7 +51,7 @@ const Dashboard = () => {
     </Fragment>
   );
 
-  return loading ? <Spinner /> : dashboardContent;
+  return loadingProfile ? <Spinner /> : dashboardContent;
 };
 
 export default Dashboard;

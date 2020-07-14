@@ -17,6 +17,7 @@ router
   .delete(postController.deleteUserpost);
 
 router.route("/:id/like").post(postController.addLike);
+router.route("/:id/likes").get(postController.getLikes);
 router.route("/:id/unlike").delete(postController.removeLike);
 router.route("/:id/comments").post(postController.addComment);
 router.route("/:post_id/:comment_id").delete(postController.removeComments);

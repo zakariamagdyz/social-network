@@ -46,7 +46,8 @@ const PostItem = ({
                 <span className="comment-count">{comments.length}</span>
               )}
             </Link>
-            {auth.isAuthenticated && auth.user._id === user && (
+            {(auth.isAuthenticated && auth.user._id === user) ||
+            auth.user.role === "admin" ? (
               <button
                 type="button"
                 className="btn btn-danger"
@@ -54,6 +55,8 @@ const PostItem = ({
               >
                 <i className="fas fa-times"></i>
               </button>
+            ) : (
+              ""
             )}
           </Fragment>
         )}

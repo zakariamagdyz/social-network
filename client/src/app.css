@@ -158,7 +158,57 @@ img {
   color: #333;
 }
 
-.btn-primary,
+.alert--enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+.alert--enter-active {
+  opacity: 0.9;
+  transform: translateY(2px);
+
+  transition: all 0.8s ease;
+}
+
+.alert--enter-done {
+  transform: translateY(0px);
+
+  transition: all 0.1s ease;
+}
+
+.alert--exit-active {
+  opacity: 0;
+  transform: translateY(-30px);
+
+  transition: all 0.5s;
+}
+
+.social {
+  overflow: hidden;
+  height: 350px;
+}
+
+.social--enter > * {
+  transform: translateY(-600px);
+}
+.social--enter-active > * {
+  transform: translateY(0);
+  transition: transform 0.5s;
+}
+
+.social--exit > * {
+  transform: translateY(0px);
+}
+.social--exit-active > * {
+  transform: translateY(-600px);
+  transition: transform 0.5s;
+}
+
+.social--exit {
+}
+.social--exit-active {
+}
+
+.aler .btn-primary,
 .bg-primary,
 .badge-primary,
 .alert-primary {

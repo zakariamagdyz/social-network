@@ -124,7 +124,7 @@ export const getProfiels = () => async (dispatch) => {
 export const getProfileId = (id) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/v1/profiles/${id}`);
-    dispatch({ type: profile.PROFILE_SUCCESS, payload: res.data });
+    dispatch({ type: profile.PROFILE_SHOW_SUCCESS, payload: res.data });
   } catch (error) {
     dispatch({ type: profile.PROFILE_FAIL });
     dispatch({ type: profile.CLEAR_PROFILE });

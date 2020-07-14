@@ -204,3 +204,16 @@ exports.editComment = catchAsync(async (req, res, next) => {
 //   await post.save();
 //   res.status(201).json({ status: "success", data: { data: post } });
 // });
+
+exports.getLikes = catchAsync(async (req, res, next) => {
+  const post = await Post.findById(req.params.id).populate({
+    path: "likes",
+    populate: { path: "user", select: "name avatar" },
+  });
+
+  if (!post) return next(new HttpError("There is no post with that ID", 404));
+  return res.status(200).json({
+    status: "success",
+    data: post.likes.map((like) => like.toObject({ getters: true })),
+  });
+});

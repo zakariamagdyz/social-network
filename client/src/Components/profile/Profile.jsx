@@ -12,36 +12,38 @@ import ProfileRepos from "./ProfileRepos";
 const Profile = () => {
   const id = useParams().id;
   const dispatch = useDispatch();
-  const { profile, loading } = useSelector((state) => state.profile);
+  const { showProfile, loadingShowProfile } = useSelector(
+    (state) => state.profile
+  );
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   useEffect(() => {
     dispatch(getProfileId(id));
   }, [dispatch]);
 
-  if (!loading && profile === null) {
+  if (!loadingShowProfile && showProfile === null) {
     return <Redirect to="/error" />;
   }
 
-  return loading ? (
+  return loadingShowProfile ? (
     <Spinner></Spinner>
   ) : (
     <Fragment>
       <Link to="/profiles" className="btn btn-light">
         back to profiles
       </Link>
-      {isAuthenticated && user._id === profile.user._id && (
+      {isAuthenticated && user._id === showProfile.user._id && (
         <Link to="/edit" className="btn btn-dark">
           edit
         </Link>
       )}
 
       <div className="profile-grid my-1">
-        <ProfileTop profile={profile} />
-        <ProfileAbout profile={profile} />
+        <ProfileTop profile={showProfile} />
+        <ProfileAbout profile={showProfile} />
         <div className="profile-exp bg-white p-2">
           <h2 className="text-primary">Experience</h2>
-          {profile.experience.length > 0 ? (
-            <ProfileExperience experiences={profile.experience} />
+          {showProfile.experience.length > 0 ? (
+            <ProfileExperience experiences={showProfile.experience} />
           ) : (
             <h4>No experience credentials</h4>
           )}
@@ -49,16 +51,16 @@ const Profile = () => {
 
         <div className="profile-edu bg-white p-2">
           <h2 className="text-primary">Education</h2>
-          {profile.education.length > 0 ? (
-            <ProfileEducation educations={profile.education} />
+          {showProfile.education.length > 0 ? (
+            <ProfileEducation educations={showProfile.education} />
           ) : (
             <h4>No education credentials</h4>
           )}
         </div>
       </div>
 
-      {profile.gitHubUserName && (
-        <ProfileRepos username={profile.gitHubUserName} />
+      {showProfile.gitHubUserName && (
+        <ProfileRepos username={showProfile.gitHubUserName} />
       )}
     </Fragment>
   );

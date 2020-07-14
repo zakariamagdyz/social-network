@@ -23,13 +23,16 @@ const CommentItem = ({
           <p className="my-1">{text}</p>
           <Moment format="YYYY/MM/DD">{date}</Moment>
 
-          {auth.isAuthenticated && auth.user._id === user && (
+          {(auth.isAuthenticated && auth.user._id === user) ||
+          auth.user.role === "admin" ? (
             <button
               className="btn btn-danger"
               onClick={() => dispatch(deleteComment(postId, _id))}
             >
               delete
             </button>
+          ) : (
+            ""
           )}
         </div>
       </div>

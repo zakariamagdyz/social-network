@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { getProfile } from "../../redux/actions/profile";
 import { Link } from "react-router-dom";
 import Spinner from "../common/Spinner";
+import { CSSTransition } from "react-transition-group";
 
 const EditProfile = () => {
   const dispatch = useDispatch();
@@ -177,7 +178,6 @@ const EditProfile = () => {
           ></textarea>
           <small className="form-text">Tell us a little about yourself</small>
         </div>
-
         <div className="my-2">
           <button
             type="button"
@@ -188,9 +188,14 @@ const EditProfile = () => {
           </button>
           <span>Optional</span>
         </div>
-
-        {showSocialLinks && (
-          <Fragment>
+        <CSSTransition
+          in={showSocialLinks}
+          mountOnEnter
+          unmountOnExit
+          timeout={500}
+          classNames="social-"
+        >
+          <div className="social">
             <div className="form-group social-input">
               <i className="fab fa-twitter fa-2x"></i>
               <input
@@ -245,8 +250,8 @@ const EditProfile = () => {
                 onChange={onChange}
               />
             </div>
-          </Fragment>
-        )}
+          </div>
+        </CSSTransition>
 
         <input type="submit" className="btn btn-primary my-1" />
         <Link className="btn btn-light my-1" to="/dashboard">
