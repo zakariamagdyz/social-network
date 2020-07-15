@@ -3,6 +3,7 @@ const HttpError = require("../Utils/HttpError");
 const catchAsync = require("../Utils/catchAsync");
 const selectFields = require("../Utils/selectFields");
 const Factory = require("./FactoryController");
+const Profile = require("../Models/Profile");
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
@@ -24,7 +25,6 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteMe = catchAsync(async (req, res, next) => {
-  console.log(User);
   const user = await User.findByIdAndUpdate(
     req.user._id,
     { active: false },
@@ -33,6 +33,8 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
       runValidators: true,
     }
   );
+
+  await Profile.findOneAndDelete({ user: req.user._id });
   res.status(204).json({ status: "success" });
 });
 

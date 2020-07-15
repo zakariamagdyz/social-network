@@ -6,7 +6,7 @@ const Alert = () => {
   const alerts = useSelector((state) => state.alert);
 
   return (
-    <TransitionGroup component={null}>
+    <TransitionGroup className="alert-container">
       {alerts !== null &&
         alerts.length > 0 &&
         alerts.map((alert) => (

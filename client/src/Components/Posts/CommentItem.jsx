@@ -24,7 +24,7 @@ const CommentItem = ({
           <Moment format="YYYY/MM/DD">{date}</Moment>
 
           {(auth.isAuthenticated && auth.user._id === user) ||
-          auth.user.role === "admin" ? (
+          (auth.user && auth.user.role === "admin") ? (
             <button
               className="btn btn-danger"
               onClick={() => dispatch(deleteComment(postId, _id))}

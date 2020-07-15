@@ -14,53 +14,72 @@ const PostItem = ({
   date,
   user,
   showActions,
+  toggleModal,
+  postId,
 }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   return (
     <div className="post bg-white p-1 my-1">
-      <div>
+      <div className="post__user">
         <Link to={`/profile/${user}`}>
           <img className="round-img" src={avatar} alt="" />
           <h4>{name}</h4>
         </Link>
       </div>
-      <div>
-        <p className="my-1">{text}</p>
-        <Moment format="YYYY/MM/DD">{date}</Moment>
 
-        {showActions && (
-          <Fragment>
+      <div className="post__data">
+        <p className="my-1">{text}</p>
+        <Moment format="YYYY/MM/DD" className="time">
+          {date}
+        </Moment>
+      </div>
+
+      {showActions && (
+        <div className="post__actions">
+          <div className="post__actions__like">
             <button
-              type="button"
               className="btn btn-light"
               onClick={() => dispatch(addLike(_id))}
             >
-              <i className="fas fa-thumbs-up"></i>{" "}
-              {likes.length > 0 && <span>{likes.length}</span>}
+              Liks
             </button>
 
-            <Link to={`/posts/${_id}`} className="btn btn-primary">
-              Discussion{" "}
-              {comments.length > 0 && (
-                <span className="comment-count">{comments.length}</span>
-              )}
-            </Link>
-            {(auth.isAuthenticated && auth.user._id === user) ||
-            auth.user.role === "admin" ? (
+            {likes.length > 0 && (
               <button
                 type="button"
-                className="btn btn-danger"
-                onClick={() => dispatch(deleteAPost(_id))}
+                className="btn btn-light free"
+                onClick={() => {
+                  toggleModal();
+                  postId(_id);
+                }}
               >
-                <i className="fas fa-times"></i>
+                <i className="fas fa-thumbs-up"></i>{" "}
+                <span>{likes.length} </span>
               </button>
-            ) : (
-              ""
             )}
-          </Fragment>
-        )}
-      </div>
+          </div>
+
+          <Link to={`/posts/${_id}`} className="btn btn-primary">
+            Discussion{" "}
+            {comments.length > 0 && (
+              <span className="comment-count">{comments.length}</span>
+            )}
+          </Link>
+          {(auth.isAuthenticated && auth.user._id === user) ||
+          (auth.user && auth.user.role === "admin") ? (
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={() => dispatch(deleteAPost(_id))}
+            >
+              <i className="fas fa-times"></i>
+            </button>
+          ) : (
+            ""
+          )}
+        </div>
+      )}
     </div>
   );
 };

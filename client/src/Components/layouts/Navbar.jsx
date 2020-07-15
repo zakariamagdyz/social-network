@@ -15,6 +15,7 @@ const Navbar = () => {
     <ul>
       <li>
         <NavLink to="/posts">
+          <i className="fa fa-bullhorn" aria-hidden="true"></i>{" "}
           <span className="hide-sm">Posts</span>
         </NavLink>
       </li>

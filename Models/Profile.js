@@ -16,7 +16,6 @@ const profileSchema = new mongoose.Schema(
       type: [String],
       validate: {
         validator: function (val) {
-          console.log(val.length);
           return val.length > 0;
         },
         message: "Please provide your skills",

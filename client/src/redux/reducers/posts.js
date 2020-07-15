@@ -4,9 +4,11 @@ import { authTypes } from "../types/auth.js";
 
 const INITAL_STATE = {
   allPosts: [],
+  allLikes: [],
   onePost: null,
   loadingAllPosts: true,
   loadingOnePost: true,
+  loadingLikes: true,
 };
 
 export default (state = INITAL_STATE, action) => {
@@ -47,6 +49,15 @@ export default (state = INITAL_STATE, action) => {
           return post;
         }),
       };
+
+    case postType.GET_LIKES:
+      return { ...state, allLikes: action.payload.data, loadingLikes: false };
+
+    case postType.GET_LIKES_FAILED:
+      return { ...state, allLikes: [], loadingLikes: false };
+
+    case postType.GET_LIKES_START:
+      return { ...state, allLikes: [], loadingLikes: true };
 
     case postType.INIT_LOADING:
     case profile.PROFILE_SUCCESS:

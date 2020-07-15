@@ -70,7 +70,6 @@ exports.createAndUpdateProfile = catchAsync(async (req, res, next) => {
     }
   );
 
-  console.log(profileData);
   res.status(200).json({
     status: "success",
     data: updatedProfile.toObject({ getters: true }),

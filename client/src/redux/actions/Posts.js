@@ -90,3 +90,14 @@ export const deleteComment = (postId, commentId) => async (dispatch) => {
     dispatch(setAlert(error.response.data.message, "danger"));
   }
 };
+
+export const getLikes = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: postType.GET_LIKES_START });
+    const res = await axios.get(`/api/v1/posts/${id}/likes`);
+
+    dispatch({ type: postType.GET_LIKES, payload: res.data });
+  } catch (error) {
+    dispatch({ type: postType.GET_LIKES_FAILED });
+  }
+};

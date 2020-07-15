@@ -9,7 +9,7 @@ import { CSSTransition } from "react-transition-group";
 
 const EditProfile = () => {
   const dispatch = useDispatch();
-  const { profile, loading } = useSelector((state) => state.profile);
+  const { profile, loadingProfile } = useSelector((state) => state.profile);
 
   // check if profile not contain to eny social links
   // if (profile && !profile.social) profile.social = {};
@@ -32,27 +32,36 @@ const EditProfile = () => {
   useEffect(() => {
     dispatch(getProfile());
   }, []);
+  console.log(profile);
 
   useEffect(() => {
     setFormData({
-      company: loading || !profile.company ? "" : profile.company,
-      website: loading || !profile.website ? "" : profile.website,
-      location: loading || !profile.location ? "" : profile.location,
-      status: loading || !profile.status ? "" : profile.status,
-      skills: loading || !profile.skills ? "" : profile.skills.join(","),
+      company: loadingProfile || !profile.company ? "" : profile.company,
+      website: loadingProfile || !profile.website ? "" : profile.website,
+      location: loadingProfile || !profile.location ? "" : profile.location,
+      status: loadingProfile || !profile.status ? "" : profile.status,
+      skills: loadingProfile || !profile.skills ? "" : profile.skills.join(","),
       gitHubUserName:
-        loading || !profile.gitHubUserName ? "" : profile.gitHubUserName,
-      bio: loading || !profile.bio ? "" : profile.bio,
-      twitter: loading || !profile.social.twitter ? "" : profile.social.twitter,
+        loadingProfile || !profile.gitHubUserName ? "" : profile.gitHubUserName,
+      bio: loadingProfile || !profile.bio ? "" : profile.bio,
+      twitter:
+        loadingProfile || !profile.social.twitter ? "" : profile.social.twitter,
       facebook:
-        loading || !profile.social.facebook ? "" : profile.social.facebook,
+        loadingProfile || !profile.social.facebook
+          ? ""
+          : profile.social.facebook,
       linkedin:
-        loading || !profile.social.linkedin ? "" : profile.social.linkedin,
-      youtube: loading || !profile.social.youtube ? "" : profile.social.youtube,
+        loadingProfile || !profile.social.linkedin
+          ? ""
+          : profile.social.linkedin,
+      youtube:
+        loadingProfile || !profile.social.youtube ? "" : profile.social.youtube,
       instagram:
-        loading || !profile.social.instagram ? "" : profile.social.instagram,
+        loadingProfile || !profile.social.instagram
+          ? ""
+          : profile.social.instagram,
     });
-  }, [loading]);
+  }, [loadingProfile]);
 
   const {
     company,
@@ -261,7 +270,7 @@ const EditProfile = () => {
     </Fragment>
   );
 
-  return !loading ? formEdit : <Spinner />;
+  return !loadingProfile ? formEdit : <Spinner />;
 };
 
 export default EditProfile;

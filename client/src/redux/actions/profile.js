@@ -51,7 +51,6 @@ export const addExperience = (formData, history) => async (dispatch) => {
 
     history.push("/dashboard");
   } catch (error) {
-    console.log(error);
     dispatch({ type: profile.PROFILE_FAIL });
     dispatch(setAlert(error.response.data.message, "danger"));
   }
@@ -117,6 +116,7 @@ export const getProfiels = () => async (dispatch) => {
     dispatch({ type: profile.GET_PROFILES, payload: res.data });
   } catch (error) {
     dispatch({ type: profile.GET_PROFILES_FAIL });
+
     dispatch(setAlert(error.response.data.message, "danger"));
   }
 };
