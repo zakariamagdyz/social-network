@@ -38,13 +38,6 @@ const PostItem = ({
       {showActions && (
         <div className="post__actions">
           <div className="post__actions__like">
-            <button
-              className="btn btn-light"
-              onClick={() => dispatch(addLike(_id))}
-            >
-              Liks
-            </button>
-
             {likes.length > 0 && (
               <button
                 type="button"
@@ -56,6 +49,22 @@ const PostItem = ({
               >
                 <i className="fas fa-thumbs-up"></i>{" "}
                 <span>{likes.length} </span>
+              </button>
+            )}
+
+            {likes.find((like) => like.user === auth.user._id) ? (
+              <button
+                className="btn btn-liked"
+                onClick={() => dispatch(addLike(_id))}
+              >
+                liked
+              </button>
+            ) : (
+              <button
+                className="btn btn-light btn-unliked"
+                onClick={() => dispatch(addLike(_id))}
+              >
+                like
               </button>
             )}
           </div>

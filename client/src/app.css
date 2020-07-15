@@ -537,12 +537,16 @@ button {
   width: 100px;
 }
 
-.post .comment-count {
-  background: var(--light-color);
-  color: var(--primary-color);
-  padding: 0.1rem 0.2rem;
-  border-radius: 5px;
+.comment-count {
+  color: var(--light-color);
+  background-color: var(--primary-color);
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  justify-content: center;
   font-size: 0.8rem;
+  vertical-align: middle;
 }
 
 .post .post-date {
@@ -571,6 +575,7 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-left: 10px;
 }
 
 .post__data p {
@@ -597,17 +602,23 @@ button {
 
 .post__actions__like {
   display: flex;
-  flex-direction: column;
 }
 
 .free {
-  position: absolute;
-  right: 15px;
-  top: -145px;
   background: none;
   padding: 0;
   margin: 0;
   color: #17a2b8;
+  margin-right: 20px;
+}
+
+.btn-liked {
+  background: #17a2b8;
+  color: #fff;
+  transition: all 0.5s;
+}
+.btn-unliked {
+  transition: all 0.3s;
 }
 
 .post--appear,

@@ -6,6 +6,7 @@ import { Link, Redirect, useParams } from "react-router-dom";
 import PostItem from "./PostItem";
 import CommentForm from "./CommentForm";
 import CommentItem from "./CommentItem";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const Post = () => {
   const id = useParams().id;
@@ -30,15 +31,18 @@ const Post = () => {
       </Link>
       <PostItem {...post.onePost}></PostItem>
       <CommentForm postId={post.onePost._id} />
-      <div className="comments">
+      <TransitionGroup className="comments">
         {post.onePost.comments.map((comment) => (
-          <CommentItem
+          <CSSTransition
             key={comment._id}
-            comment={comment}
-            postId={post.onePost._id}
-          />
+            timeout={1000}
+            classNames="comment-"
+            appear
+          >
+            <CommentItem comment={comment} postId={post.onePost._id} />
+          </CSSTransition>
         ))}
-      </div>
+      </TransitionGroup>
     </Fragment>
   );
 };
