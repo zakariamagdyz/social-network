@@ -556,6 +556,7 @@ button {
   position: relative;
   height: 200px;
   overflow: hidden;
+  align-items: flex-start;
 }
 
 .post__data {
@@ -565,7 +566,7 @@ button {
   border-radius: 5px;
   border: 1px solid #ccc;
   box-shadow: 1px 1px 0.5px rgba(0, 0, 0, 0.4);
-  height: 50%;
+  height: 70%;
   overflow: auto;
   display: flex;
   flex-direction: column;
@@ -581,8 +582,8 @@ button {
   font-size: 15px;
   color: "#888";
   position: absolute;
-  top: 7px;
-  right: 10px;
+  bottom: 7px;
+  left: 10px;
   opacity: 0.5;
 }
 
@@ -602,10 +603,11 @@ button {
 .free {
   position: absolute;
   right: 15px;
-  top: -128px;
+  top: -145px;
   background: none;
   padding: 0;
   margin: 0;
+  color: #17a2b8;
 }
 
 .post--appear,
