@@ -4,7 +4,7 @@ import Spinner from "../common/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import PostItem from "./PostItem";
 import PostForm from "./PostForm";
-import Modal from "../layouts/Modal";
+import Modal from "../layouts/Modal/Modal";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const Posts = () => {

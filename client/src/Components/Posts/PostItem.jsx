@@ -23,14 +23,14 @@ const PostItem = ({
     <div className="post bg-white p-1 my-1">
       <div className="post__user">
         <Link to={`/profile/${user}`}>
-          <img className="round-img" src={avatar} alt="" />
+          <img className="round-img" src={`/${avatar}`} alt="" />
           <h4>{name}</h4>
         </Link>
       </div>
 
       <div className="post__data">
         <p className="my-1">{text}</p>
-        <Moment format="YYYY/MM/DD" className="time">
+        <Moment format="YYYY-MM-DD HH:mm" className="time">
           {date}
         </Moment>
       </div>

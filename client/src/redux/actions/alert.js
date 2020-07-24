@@ -16,3 +16,6 @@ export const setAlert = (message, type, timeout = 5000) => (dispatch) => {
     timeout
   );
 };
+
+export const clearAlerts = () => (dispatch) =>
+  dispatch({ type: alertTypes.CLEAR_ALERTS });

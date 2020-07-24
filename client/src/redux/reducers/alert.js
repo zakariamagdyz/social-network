@@ -13,6 +13,9 @@ export default (state = INITAL_STATE, action) => {
 
     case alertTypes.REMOVE_ALERT:
       return state.filter((alert) => alert.id !== action.payload);
+
+    case alertTypes.CLEAR_ALERTS:
+      return [];
     default:
       return state;
   }

@@ -14,7 +14,14 @@ router
 
 router.use(authController.protect);
 
-router.route("/update-me").patch(userController.updateMe);
+////
+router
+  .route("/update-me")
+  .patch(
+    userController.updataUserAvatar,
+    userController.resizePhoto,
+    userController.updateMe
+  );
 router.route("/delete-me").delete(userController.deleteMe);
 
 router

@@ -17,9 +17,10 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
-export const register = ({ name, email, password, passwordConfirm }) => async (
-  dispatch
-) => {
+export const register = (
+  { name, email, password, passwordConfirm },
+  setErrors
+) => async (dispatch) => {
   const body = JSON.stringify({ name, email, password, passwordConfirm });
 
   try {
@@ -31,7 +32,11 @@ export const register = ({ name, email, password, passwordConfirm }) => async (
     dispatch(loadUser());
   } catch (err) {
     dispatch({ type: authTypes.REGESTIR_FAIL });
-    dispatch(setAlert(err.response.data.message, "danger"));
+    if (err.response.data.message.includes("duplicate")) {
+      setErrors({ email: "Email already exists, Please use another Email" });
+    } else {
+      dispatch(setAlert(err.response.data.message, "danger"));
+    }
   }
 };
 
@@ -54,4 +59,16 @@ export const LogIn = ({ email, password }) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   dispatch({ type: profile.CLEAR_PROFILE });
   dispatch({ type: authTypes.LOGOUT });
+};
+
+export const updateAvatar = (file) => async (dispatch) => {
+  try {
+    const formData = new FormData();
+    formData.append("avatar", file);
+    const res = await axios.patch("/api/v1/users/update-me", formData);
+
+    dispatch({ type: authTypes.UPDATE_AVATAR, payload: res.data });
+  } catch (err) {
+    dispatch(setAlert(err.response.data.message, "danger"));
+  }
 };

@@ -21,12 +21,12 @@ const CommentItem = ({
   return (
     <CommentContainer>
       <CommentOwner to={`/profile/${user}`}>
-        <CommentImage className="round-img" src={avatar} alt="" />
+        <CommentImage className="round-img" src={`/${avatar}`} alt="" />
         <CommentName>{name}</CommentName>
       </CommentOwner>
       <CommentData>
         <h4>{text}</h4>
-        <Moment format="YYYY/MM/DD">{date}</Moment>
+        <Moment format="YYYY-MM-DD HH:mm">{date}</Moment>
       </CommentData>
 
       {(auth.isAuthenticated && auth.user._id === user) ||

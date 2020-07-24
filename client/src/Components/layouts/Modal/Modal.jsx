@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getLikes } from "../../redux/actions/Posts";
-import Spinner from "../common/Spinner";
+import { getLikes } from "../../../redux/actions/Posts";
+import Spinner from "../../common/Spinner";
 import {
   ModalContainer,
   Overlay,
@@ -34,14 +34,16 @@ const Modal = ({ postId, toggleModal }) => {
           {loadingLikes ? (
             <Spinner />
           ) : (
-            allLikes.map((like) => (
-              <LikerContainer key={like.id}>
-                <LikerImageContainer>
-                  <LikerImage src={like.user.avatar} alt="" />
-                </LikerImageContainer>
-                <Liker>{like.user.name}</Liker>
-              </LikerContainer>
-            ))
+            allLikes
+              .filter((like) => !!like.user)
+              .map((like) => (
+                <LikerContainer key={like.id}>
+                  <LikerImageContainer>
+                    <LikerImage src={like.user.avatar} alt="" />
+                  </LikerImageContainer>
+                  <Liker>{like.user.name}</Liker>
+                </LikerContainer>
+              ))
           )}
         </ModalContent>
 

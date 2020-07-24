@@ -2,9 +2,9 @@ import React, { lazy, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
 import Spinner from "../common/Spinner";
 
-const Register = lazy(() => import("../auth/Register"));
-const Login = lazy(() => import("../auth/Login"));
-const Alert = lazy(() => import("./Alert"));
+const Register = lazy(() => import("../auth/Register/Register"));
+const Login = lazy(() => import("../auth/LogIn/Login"));
+const Alert = lazy(() => import("./Alert/Alert"));
 const Dashboard = lazy(() => import("../dashboards/Dashboard"));
 const PrivatRoute = lazy(() => import("../auth/PrivatRoute"));
 const CreateProfile = lazy(() => import("../profile-forms/CreateProfile.jsx"));

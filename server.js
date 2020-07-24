@@ -1,7 +1,4 @@
 const mongoose = require("mongoose");
-const dotEnv = require("dotenv");
-
-dotEnv.config();
 
 process.on("uncaughtException", (err) => {
   console.log(`${err.name} : ${err.message} \n ${err.stack}`);
@@ -11,7 +8,9 @@ process.on("uncaughtException", (err) => {
 
 const app = require("./app");
 
-const db = process.env.MONGO_URI || process.env.DATABASE_STRING;
+const db =
+  process.env.MONGO_URI ||
+  `mongodb+srv://zakariaDevConnector:${process.env.DATABASE_PASSWORD}@devconnector-eoyey.mongodb.net/${process.env.DATABASE_NAME}?retryWrites=true&w=majority`;
 
 mongoose
   .connect(db, {

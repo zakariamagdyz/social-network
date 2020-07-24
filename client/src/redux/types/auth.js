@@ -6,4 +6,5 @@ export const authTypes = {
   LOGIN_SUCCESS: "LOGIN_SUCCESS",
   LOGIN_FAIL: "LOGIN_FAIL",
   LOGOUT: "LOGOUT",
+  UPDATE_AVATAR: "UPDATE_AVATAR",
 };

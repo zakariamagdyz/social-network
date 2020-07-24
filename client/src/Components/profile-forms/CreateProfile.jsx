@@ -2,6 +2,7 @@ import React, { useEffect, useState, Fragment } from "react";
 import { addProfile } from "../../redux/actions/profile";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
 
 const CreateProfile = () => {
   const [formData, setFormData] = useState({
@@ -144,7 +145,6 @@ const CreateProfile = () => {
           ></textarea>
           <small className="form-text">Tell us a little about yourself</small>
         </div>
-
         <div className="my-2">
           <button
             type="button"
@@ -155,9 +155,14 @@ const CreateProfile = () => {
           </button>
           <span>Optional</span>
         </div>
-
-        {showSocialLinks && (
-          <Fragment>
+        <CSSTransition
+          in={showSocialLinks}
+          mountOnEnter
+          unmountOnExit
+          timeout={500}
+          classNames="social-"
+        >
+          <div className="social">
             <div className="form-group social-input">
               <i className="fab fa-twitter fa-2x"></i>
               <input
@@ -212,8 +217,8 @@ const CreateProfile = () => {
                 onChange={onChange}
               />
             </div>
-          </Fragment>
-        )}
+          </div>
+        </CSSTransition>
 
         <input type="submit" className="btn btn-primary my-1" />
         <a className="btn btn-light my-1" href="dashboard.html">

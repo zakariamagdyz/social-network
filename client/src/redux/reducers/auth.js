@@ -36,6 +36,8 @@ export default (state = INITAL_STATE, action) => {
       localStorage.removeItem("token");
       return { ...state, token: null, isAuthenticated: false, loading: false };
 
+    case authTypes.UPDATE_AVATAR:
+      return { ...state, user: action.payload.data };
     default:
       return state;
   }

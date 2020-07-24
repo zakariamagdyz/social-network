@@ -32,7 +32,6 @@ const EditProfile = () => {
   useEffect(() => {
     dispatch(getProfile());
   }, []);
-  console.log(profile);
 
   useEffect(() => {
     setFormData({

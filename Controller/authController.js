@@ -18,7 +18,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
     "passwordConfirm"
   );
 
-  const avatar = gravatar.url(bodyData.email, { s: "200", r: "pg", d: "mm" });
+  const avatar = "default.jpg";
   const data = { avatar, ...bodyData };
 
   const newUser = await User.create(data);
@@ -43,6 +43,7 @@ exports.signIn = catchAsync(async (req, res, next) => {
 
   const token = currentUser.generateJwtToken();
   this.password = undefined;
+  res.cookie("token", token, { httpOnly: true });
   res.status(200).json({ status: "success", token, data: currentUser });
 });
 

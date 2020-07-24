@@ -1,15 +1,22 @@
-import React, { Fragment } from "react";
-import { NavLink, useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { logout } from "../../redux/actions/auth";
-
-import { useDispatch } from "react-redux";
+import React, { Fragment, useEffect, useCallback } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../../redux/actions/auth";
+import { clearAlerts } from "../../../redux/actions/alert";
+import { NavBar } from "./Navbar.style";
 
 const Navbar = () => {
   const { isAuthenticated, loading } = useSelector((state) => state.auth);
+  const alert = useSelector((state) => state.alert);
 
-  const history = useHistory();
   const dispatch = useDispatch();
+
+  const location = useLocation();
+  useEffect(() => {
+    if (alert.length > 0) {
+      dispatch(clearAlerts());
+    }
+  }, [location]);
 
   const authLinks = (
     <ul>
@@ -58,7 +65,7 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="navbar bg-dark">
+    <NavBar>
       <h1>
         <NavLink to="/">
           <i className="fas fa-code"></i> DevConnector
@@ -68,7 +75,7 @@ const Navbar = () => {
       {!loading && (
         <Fragment>{isAuthenticated ? authLinks : guestLink}</Fragment>
       )}
-    </nav>
+    </NavBar>
   );
 };
 

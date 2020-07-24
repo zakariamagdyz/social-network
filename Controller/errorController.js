@@ -1,4 +1,5 @@
 const HttpError = require("../Utils/HttpError");
+const fs = require("fs");
 
 const handleCastError = (err) => {
   const message = `invalid ${err.path} :${err.value}`;
@@ -50,6 +51,9 @@ const sendDevError = (err, res) => {
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
+  if (req.file) {
+    fs.unlink(req.file.path, (err) => console.log(err));
+  }
 
   if (process.env.NODE_ENV === "development") {
     sendDevError(err, res);

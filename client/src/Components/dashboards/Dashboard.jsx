@@ -1,11 +1,17 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useEffect, useRef, Fragment, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { getProfile, deleteAccount } from "../../redux/actions/profile";
+import { updateAvatar } from "../../redux/actions/auth";
 import Spinner from "../common/Spinner";
 import DashboardActions from "./DashboardActions";
 import Experiences from "./Experience";
 import Educations from "./Education";
+import {
+  StyledDashboard,
+  DashboardContent,
+  DashboardAvatar,
+} from "./Dashboard.style";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -13,15 +19,40 @@ const Dashboard = () => {
     dispatch(getProfile());
   }, []);
 
+  const [image, setImage] = useState("");
   const { user } = useSelector((state) => state.auth);
   const { loadingProfile, profile } = useSelector((state) => state.profile);
 
+  const avatarFile = useRef();
+  const avatarButton = () => {
+    avatarFile.current.click();
+  };
+
+  const avatarForm = (e) => {
+    e.preventDefault();
+  };
+
+  const onChange = (e) => {
+    dispatch(updateAvatar(e.target.files[0]));
+  };
   const dashboardContent = (
-    <Fragment>
-      <h1 className="large text-primary">Dashboard</h1>
-      <p className="lead">
-        <i className="fas fa-user"></i>Welcome {user && user.name}
-      </p>
+    <StyledDashboard>
+      <h1>Dashboard</h1>
+      <DashboardContent>
+        <DashboardAvatar>
+          <form onSubmit={avatarForm}>
+            <img src={user && user.avatar} />
+            <input
+              type="file"
+              style={{ display: "none" }}
+              ref={avatarFile}
+              onChange={onChange}
+            />
+            <button onClick={avatarButton}>Upload Image</button>
+          </form>
+        </DashboardAvatar>
+        <p className="lead">Welcome {user && user.name}</p>
+      </DashboardContent>
       {profile === null ? (
         <Fragment>
           <p>You have not yet setup a profile, please add some info</p>
@@ -48,7 +79,7 @@ const Dashboard = () => {
           </div>
         </Fragment>
       )}
-    </Fragment>
+    </StyledDashboard>
   );
 
   return loadingProfile ? <Spinner /> : dashboardContent;
