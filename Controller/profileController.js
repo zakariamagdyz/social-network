@@ -16,11 +16,7 @@ exports.createAndUpdateProfile = catchAsync(async (req, res, next) => {
     gitHubUserName,
     experience,
     education,
-    youtube,
-    instagram,
-    facebook,
-    twitter,
-    linkedin,
+    social,
   } = req.body;
 
   let profileData = {};
@@ -32,13 +28,12 @@ exports.createAndUpdateProfile = catchAsync(async (req, res, next) => {
   if (status) profileData.status = status;
   if (bio) profileData.bio = bio;
   if (gitHubUserName) profileData.gitHubUserName = gitHubUserName;
-
   profileData.social = {};
-  if (youtube) profileData.social.youtube = youtube;
-  if (linkedin) profileData.social.linkedin = linkedin;
-  if (facebook) profileData.social.facebook = facebook;
-  if (twitter) profileData.social.twitter = twitter;
-  if (instagram) profileData.social.instagram = instagram;
+  if (social.youtube) profileData.social.youtube = social.youtube;
+  if (social.linkedin) profileData.social.linkedin = social.linkedin;
+  if (social.facebook) profileData.social.facebook = social.facebook;
+  if (social.twitter) profileData.social.twitter = social.twitter;
+  if (social.instagram) profileData.social.instagram = social.instagram;
   if (skills) {
     const filterdSkills = skills.split(",").map((skill) => skill.trim());
 

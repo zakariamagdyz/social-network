@@ -1,13 +1,19 @@
-import React, { Fragment, useState } from "react";
+import React from "react";
+
+import { Formik, Field } from "formik";
+import * as Yup from "yup";
 import { addExperience } from "../../redux/actions/profile";
 import { useHistory, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { DataContainer, DataForm, CurrentContainer } from "./Education.style";
+import ProfileHeader from "./ProfileHeader";
+import FormControl from "../Form Controllers/FormControl";
 
-const AddExperience = () => {
+const AddEducation = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState({
+  const initalValues = {
     company: "",
     title: "",
     location: "",
@@ -15,108 +21,88 @@ const AddExperience = () => {
     to: "",
     current: false,
     description: "",
-  });
-
-  const [toDateDisable, toggleDisabled] = useState(false);
-
-  const { company, title, location, from, to, current, description } = formData;
-
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const validationSchema = Yup.object({
+    company: Yup.string().required(),
+    title: Yup.string().required(),
+    location: Yup.string().required(),
+    from: Yup.date().required(),
+  });
 
-    dispatch(addExperience(formData, history));
+  const onSubmit = (values) => {
+    dispatch(addExperience(values, history));
   };
 
   return (
-    <Fragment>
-      <h1 className="large text-primary">Add An Experience</h1>
-      <p className="lead">
-        <i className="fas fa-code-branch"></i> Add any developer/programming
-        positions that you have had in the past
-      </p>
-      <small>* = required field</small>
-      <form className="form" onSubmit={onSubmit}>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="* Job Title"
-            name="title"
-            required
-            value={title}
-            onChange={onChange}
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="* Company"
-            name="company"
-            required
-            value={company}
-            onChange={onChange}
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="Location"
-            name="location"
-            value={location}
-            onChange={onChange}
-          />
-        </div>
-        <div className="form-group">
-          <h4>From Date</h4>
-          <input type="date" name="from" value={from} onChange={onChange} />
-        </div>
-        <div className="form-group">
-          <p>
-            <input
-              type="checkbox"
-              name="current"
-              checked={current}
-              value={current}
-              onChange={(e) => {
-                setFormData((prev) => ({ ...prev, current: !current }));
-                toggleDisabled(!toDateDisable);
-              }}
-            />
-            {"   "}
-            Current Job
-          </p>
-        </div>
-        <div className="form-group">
-          <h4>To Date</h4>
-          <input
-            type="date"
-            name="to"
-            value={to}
-            onChange={onChange}
-            disabled={toDateDisable && "disabled"}
-          />
-        </div>
-        <div className="form-group">
-          <textarea
-            name="description"
-            cols="30"
-            rows="5"
-            placeholder="Job Description"
-            value={description}
-            onChange={onChange}
-          ></textarea>
-        </div>
-        <input type="submit" className="btn btn-primary my-1" />
-        <Link className="btn btn-light my-1" to="/dashboard">
-          Go Back
-        </Link>
-      </form>
-    </Fragment>
+    <DataContainer>
+      <ProfileHeader>
+        <h1 className="large text-primary">Add An Experience</h1>
+        <p className="lead">
+          <i className="fas fa-code-branch"></i> Add any developer/programming
+          positions that you have had in the past
+        </p>
+      </ProfileHeader>
+      <Formik
+        initialValues={initalValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+      >
+        {(formik) => {
+          return (
+            <DataForm>
+              <FormControl
+                control="input"
+                name="title"
+                placeholder="* Job Title"
+              />
+              <FormControl
+                control="input"
+                name="company"
+                placeholder="* company"
+              />
+
+              <FormControl
+                control="input"
+                name="location"
+                placeholder="Location"
+              />
+
+              <FormControl control="datepicker" name="from" label="From Date" />
+
+              <Field name="current">
+                {({ field }) => {
+                  return (
+                    <CurrentContainer>
+                      <input type="checkbox" id="current" {...field} />
+                      <label htmlFor={"current"}>Current Job</label>
+                    </CurrentContainer>
+                  );
+                }}
+              </Field>
+
+              <FormControl
+                control="datepicker"
+                name="to"
+                label="To Date"
+                disabled={formik.values.current}
+              />
+              <FormControl
+                control="textarea"
+                name="description"
+                placeholder="Job Description"
+                rows="4"
+              />
+              <input type="submit" className="btn btn-primary my-1" />
+              <Link className="btn btn-light my-1" to="/dashboard">
+                Go Back
+              </Link>
+            </DataForm>
+          );
+        }}
+      </Formik>
+    </DataContainer>
   );
 };
 
-export default AddExperience;
+export default AddEducation;

@@ -1,13 +1,19 @@
-import React, { useState, Fragment } from "react";
+import React from "react";
 import { useHistory, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addEducation } from "../../redux/actions/profile";
+import { DataContainer, DataForm, CurrentContainer } from "./Education.style";
+import ProfileHeader from "./ProfileHeader";
+
+import { Formik, Field } from "formik";
+import * as Yup from "yup";
+import FormControl from "../Form Controllers/FormControl";
 
 const AddEducation = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState({
+  const initalValues = {
     school: "",
     degree: "",
     fieldOfStudy: "",
@@ -15,115 +21,87 @@ const AddEducation = () => {
     to: "",
     current: false,
     description: "",
-  });
-
-  const [toDateDisable, toggleDisabled] = useState(false);
-
-  const {
-    school,
-    degree,
-    fieldOfStudy,
-    from,
-    to,
-    current,
-    description,
-  } = formData;
-
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const validationSchema = Yup.object({
+    school: Yup.string().required(),
+    degree: Yup.string().required(),
+    fieldOfStudy: Yup.string().required(),
+    from: Yup.date().required(),
+  });
 
-    dispatch(addEducation(formData, history));
+  const onSubmit = (values) => {
+    dispatch(addEducation(values, history));
   };
 
   return (
-    <Fragment>
-      <h1 className="large text-primary">Add Your Education</h1>
-      <p className="lead">
-        <i className="fas fa-code-branch"></i> Add any School or bootcamp that
-        you have attended positions that you have had in the past
-      </p>
-      <small>* = required field</small>
-      <form className="form" onSubmit={onSubmit}>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="* School or Bootcamp"
-            name="school"
-            required
-            value={school}
-            onChange={onChange}
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="* Degree or Certificate"
-            name="degree"
-            required
-            value={degree}
-            onChange={onChange}
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="Field Of Study"
-            name="fieldOfStudy"
-            value={fieldOfStudy}
-            onChange={onChange}
-          />
-        </div>
-        <div className="form-group">
-          <h4>From Date</h4>
-          <input type="date" name="from" value={from} onChange={onChange} />
-        </div>
-        <div className="form-group">
-          <p>
-            <input
-              type="checkbox"
-              name="current"
-              checked={current}
-              value={current}
-              onChange={(e) => {
-                setFormData((prev) => ({ ...prev, current: !current }));
-                toggleDisabled(!toDateDisable);
-              }}
-            />
-            {"   "}
-            Current Job
-          </p>
-        </div>
-        <div className="form-group">
-          <h4>To Date</h4>
-          <input
-            type="date"
-            name="to"
-            value={to}
-            onChange={onChange}
-            disabled={toDateDisable && "disabled"}
-          />
-        </div>
-        <div className="form-group">
-          <textarea
-            name="description"
-            cols="30"
-            rows="5"
-            placeholder="Program Description"
-            value={description}
-            onChange={onChange}
-          ></textarea>
-        </div>
-        <input type="submit" className="btn btn-primary my-1" />
-        <Link className="btn btn-light my-1" to="/dashboard">
-          Go Back
-        </Link>
-      </form>
-    </Fragment>
+    <DataContainer>
+      <ProfileHeader>
+        <h1>Add Your Education</h1>
+        <p>
+          <i className="fas fa-code-branch"></i> Add any School or bootcamp that
+          you have attended positions that you have had in the past
+        </p>
+      </ProfileHeader>
+      <Formik
+        initialValues={initalValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+      >
+        {(formik) => {
+          return (
+            <DataForm>
+              <FormControl
+                control="input"
+                name="school"
+                placeholder="* School or Bootcamp"
+              />
+              <FormControl
+                control="input"
+                name="degree"
+                placeholder="* Degree or Certificate"
+              />
+
+              <FormControl
+                control="input"
+                name="fieldOfStudy"
+                placeholder="Field Of Study"
+              />
+
+              <FormControl control="datepicker" name="from" label="From Date" />
+
+              <Field name="current">
+                {({ field }) => {
+                  return (
+                    <CurrentContainer>
+                      <input type="checkbox" id="current" {...field} />
+                      <label htmlFor={"current"}>Current</label>
+                    </CurrentContainer>
+                  );
+                }}
+              </Field>
+
+              <FormControl
+                control="datepicker"
+                name="to"
+                label="To Date"
+                disabled={formik.values.current}
+              />
+              <FormControl
+                control="textarea"
+                name="description"
+                placeholder="Program Description"
+                rows="4"
+              />
+              <input type="submit" className="btn btn-primary my-1" />
+              <Link className="btn btn-light my-1" to="/dashboard">
+                Go Back
+              </Link>
+            </DataForm>
+          );
+        }}
+      </Formik>
+    </DataContainer>
   );
 };
 

@@ -12,17 +12,18 @@ import {
   CommentDelete,
 } from "./CommentItem.style";
 
-const CommentItem = ({
-  comment: { text, date, name, avatar, _id, user },
-  postId,
-}) => {
+const CommentItem = ({ comment: { text, date, _id, user }, postId }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   return (
     <CommentContainer>
       <CommentOwner to={`/profile/${user}`}>
-        <CommentImage className="round-img" src={`/${avatar}`} alt="" />
-        <CommentName>{name}</CommentName>
+        <CommentImage
+          className="round-img"
+          src={`/${user && user.avatar}`}
+          alt=""
+        />
+        <CommentName>{user && user.name}</CommentName>
       </CommentOwner>
       <CommentData>
         <h4>{text}</h4>

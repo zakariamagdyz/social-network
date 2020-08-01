@@ -5,14 +5,16 @@ const Post = require("../Models/Post");
 const Factory = require("./FactoryController");
 
 exports.getAllPosts = Factory.getAll(Post);
-exports.getAPost = Factory.getOne(Post);
+exports.getAPost = Factory.getOne(
+  Post,
+
+  { path: "comments", populate: { path: "user", select: "name avatar" } }
+);
 
 exports.createAPost = catchAsync(async (req, res, next) => {
   const postOptions = {
     text: req.body.text,
     user: req.user._id,
-    name: req.user.name,
-    avatar: req.user.avatar,
   };
 
   const newPost = await Post.create(postOptions);

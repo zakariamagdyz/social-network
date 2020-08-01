@@ -19,7 +19,7 @@ export const GlobalStyles = createGlobalStyle`
 }
 
 body {
-  font-family: "Raleway", sans-serif;
+  font-family: "raleway", sans-serif;
   font-size: 1.6rem;
   line-height: 1.6;
   background-color: #fff;
@@ -38,6 +38,27 @@ ul {
 
 img {
   width: 100%;
+}
+
+
+.react-datepicker {
+  font-size: 1.6rem !important;
+}
+
+.react-datepicker__current-month {
+  font-size: 1.7rem !important;
+}
+
+.react-datepicker__header {
+  padding-top: 9px !important;
+}
+
+.react-datepicker__navigation {
+  top: 15px !important;
+}
+
+.react-datepicker__day-name, .react-datepicker__day {
+  margin: 0.7rem !important;
 }
 
 `;

@@ -18,7 +18,7 @@ exports.signUp = catchAsync(async (req, res, next) => {
     "passwordConfirm"
   );
 
-  const avatar = "default.jpg";
+  const avatar = "uploads/images/default.jpg";
   const data = { avatar, ...bodyData };
 
   const newUser = await User.create(data);

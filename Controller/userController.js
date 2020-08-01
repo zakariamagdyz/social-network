@@ -7,6 +7,7 @@ const Profile = require("../Models/Profile");
 const multer = require("multer");
 const sharp = require("sharp");
 const fs = require("fs");
+const app = require("../app");
 
 let dest = "uploads/images";
 
