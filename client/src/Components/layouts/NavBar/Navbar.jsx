@@ -68,7 +68,7 @@ const Navbar = () => {
     <NavBar>
       <h1>
         <NavLink to="/">
-          <i className="fas fa-code"></i> DevConnector
+          <i className="fas fa-code"></i> DevNetwork
         </NavLink>
       </h1>
 
