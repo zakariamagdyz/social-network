@@ -18,8 +18,13 @@ exports.createAPost = catchAsync(async (req, res, next) => {
   };
 
   const newPost = await Post.create(postOptions);
+  const query = await Post.findById(newPost._id).populate({
+    path: "user",
+    select: "name avatar",
+  });
 
-  res.status(201).json({ status: "success", data: newPost });
+  console.log(query);
+  res.status(201).json({ status: "success", data: query });
 });
 
 // exports.updateAPost = catchAsync(async (req, res, next) => {
@@ -79,7 +84,7 @@ exports.deleteUserpost = catchAsync(async (req, res, next) => {
 
   if (!post) return next(new HttpError("There is no post with that ID", 404));
 
-  if (req.user.role !== "admin" && post.user.toString() !== req.user.id)
+  if (req.user.role !== "admin" && post.user.id !== req.user.id)
     return next(
       new HttpError("You dont have permission to perform this action", 403)
     );
@@ -141,8 +146,12 @@ exports.addComment = catchAsync(async (req, res, next) => {
   post.comments.push(commentOptions);
 
   await post.save();
+  const newpost = await Post.findById(req.params.id).populate({
+    path: "comments.user",
+    select: "name avatar",
+  });
 
-  res.status(200).json({ status: "success", data: post });
+  res.status(200).json({ status: "success", data: newpost });
 });
 
 // remove Comments

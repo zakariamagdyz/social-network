@@ -20,7 +20,7 @@ const PostItem = ({
   return (
     <div className="post bg-white p-1 my-1">
       <div className="post__user">
-        <Link to={`/profile/${user}`}>
+        <Link to={`/profile/${user._id}`}>
           <img className="round-img" src={`/${user && user.avatar}`} alt="" />
           <h4>{user && user.name}</h4>
         </Link>
@@ -73,7 +73,7 @@ const PostItem = ({
               <span className="comment-count">{comments.length}</span>
             )}
           </Link>
-          {(auth.isAuthenticated && auth.user._id === user) ||
+          {(auth.isAuthenticated && auth.user._id === user._id) ||
           (auth.user && auth.user.role === "admin") ? (
             <button
               type="button"

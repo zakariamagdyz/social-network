@@ -17,7 +17,7 @@ const CommentItem = ({ comment: { text, date, _id, user }, postId }) => {
   const auth = useSelector((state) => state.auth);
   return (
     <CommentContainer>
-      <CommentOwner to={`/profile/${user}`}>
+      <CommentOwner to={`/profile/${user._id}`}>
         <CommentImage
           className="round-img"
           src={`/${user && user.avatar}`}
@@ -30,7 +30,7 @@ const CommentItem = ({ comment: { text, date, _id, user }, postId }) => {
         <Moment format="YYYY-MM-DD HH:mm">{date}</Moment>
       </CommentData>
 
-      {(auth.isAuthenticated && auth.user._id === user) ||
+      {(auth.isAuthenticated && auth.user._id === user._id) ||
       (auth.user && auth.user.role === "admin") ? (
         <CommentDelete onClick={() => dispatch(deleteComment(postId, _id))}>
           delete
