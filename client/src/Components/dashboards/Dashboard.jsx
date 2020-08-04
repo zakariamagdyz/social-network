@@ -13,6 +13,17 @@ import {
   DashboardAvatar,
 } from "./Dashboard.style";
 
+////////////////////////////////////////////////////////////////
+
+const dashboardVariants = {
+  hidden: { x: "100vw", opacity: 0 },
+  visible: { x: 0, opacity: 1, transition: { type: "spring" } },
+  exit: {
+    x: "-100vw",
+    transition: { ease: "easeInOut" },
+  },
+};
+
 const Dashboard = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -36,7 +47,11 @@ const Dashboard = () => {
     dispatch(updateAvatar(e.target.files[0]));
   };
   const dashboardContent = (
-    <StyledDashboard>
+    <StyledDashboard
+      variants={dashboardVariants}
+      initial="hidden"
+      animate="visible"
+    >
       <h1>Dashboard</h1>
       <DashboardContent>
         <DashboardAvatar>

@@ -3,6 +3,18 @@ import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteAPost, addLike } from "../../redux/actions/Posts";
+import { motion, AnimatePresence } from "framer-motion";
+
+////////
+
+const postItemVariants = {
+  hidden: { x: "100vw", opacity: 0 },
+  visible: { x: 0, opacity: 1, transition: { type: "spring" } },
+  exit: {
+    x: "-100vw",
+    transition: { ease: "easeInOut" },
+  },
+};
 
 const PostItem = ({
   _id,
@@ -18,7 +30,13 @@ const PostItem = ({
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   return (
-    <div className="post bg-white p-1 my-1">
+    <motion.div
+      className="post bg-white p-1 my-1"
+      variants={postItemVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <div className="post__user">
         <Link to={`/profile/${user._id}`}>
           <img className="round-img" src={`/${user && user.avatar}`} alt="" />
@@ -87,7 +105,7 @@ const PostItem = ({
           )}
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

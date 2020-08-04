@@ -8,32 +8,6 @@ export const CommentContainer = styled.div`
   border: 2px dashed #ccc;
   margin-top: 15px;
   background: #eee;
-
-  &.comment--appear {
-    transform: translateY(200px);
-    opacity: 0.5;
-  }
-  &.comment--appear-active {
-    transform: translateY(0px);
-    opacity: 1;
-    transition: all 1s;
-  }
-  &.comment--enter {
-    transform: translateY(200px);
-    opacity: 0.5;
-  }
-  &.comment--enter-active {
-    transform: translateY(0px);
-    opacity: 1;
-    transition: all 1s;
-  }
-  &.comment--exit {
-  }
-  &.comment--exit-active {
-    transform: translateY(-100px) rotate(45deg);
-    opacity: 0;
-    transition: all 0.5s;
-  }
 `;
 
 export const CommentOwner = styled(Link)`

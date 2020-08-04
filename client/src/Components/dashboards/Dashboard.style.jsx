@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
-export const StyledDashboard = styled.div`
+export const StyledDashboard = styled(motion.div)`
   h1:first-child {
     font-size: 4rem;
     color: var(--primary-color);

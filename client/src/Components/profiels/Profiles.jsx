@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProfiels } from "../../redux/actions/profile";
 import Spinner from "../common/Spinner";
 import ProfileItem from "./ProfileItem";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const Profiles = () => {
   const dispatch = useDispatch();
@@ -20,22 +19,14 @@ const Profiles = () => {
         <i className="fab fa-connectdevelop"></i> Browse and connect with
         developers
       </p>
-      <TransitionGroup className="profiles">
-        {profiles.length > 0 ? (
-          profiles.map((profile) => (
-            <CSSTransition
-              key={profile._id}
-              classNames="profiles-"
-              appear
-              timeout={1500}
-            >
-              <ProfileItem {...profile} />
-            </CSSTransition>
-          ))
-        ) : (
-          <h4>There is no profiels to show</h4>
-        )}
-      </TransitionGroup>
+
+      {profiles.length > 0 ? (
+        profiles.map((profile) => (
+          <ProfileItem {...profile} key={profile._id} />
+        ))
+      ) : (
+        <h4>There is no profiels to show</h4>
+      )}
     </Fragment>
   );
   return loadingProfiles ? <Spinner /> : profile;

@@ -40,23 +40,32 @@ export const register = (
   }
 };
 
-export const LogIn = ({ email, password }) => async (dispatch) => {
+export const LogIn = ({ email, password, actions }) => async (dispatch) => {
   const body = JSON.stringify({ email, password });
 
   try {
     const res = await axios.post("/api/v1/users/log-in", body, {
       headers: { "Content-Type": "application/json" },
     });
+    actions.setSubmitting(false);
 
     dispatch({ type: authTypes.LOGIN_SUCCESS, payload: res.data });
     dispatch(loadUser());
   } catch (err) {
+    actions.setSubmitting(false);
+
     dispatch({ type: authTypes.LOGIN_FAIL });
     dispatch(setAlert(err.response.data.message, "danger"));
   }
 };
 
-export const logout = () => (dispatch) => {
+export const logout = () => async (dispatch) => {
+  try {
+    await axios.post("/api/v1/users/sign-out");
+  } catch (err) {
+    dispatch(setAlert(err.response.data.message, "danger"));
+    console.log("hola");
+  }
   dispatch({ type: profile.CLEAR_PROFILE });
   dispatch({ type: authTypes.LOGOUT });
 };

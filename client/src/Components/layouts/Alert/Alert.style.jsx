@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { TransitionGroup } from "react-transition-group";
+import { motion } from "framer-motion";
 
 const alertType = (props) => {
   if (props.success === true) {
@@ -10,7 +10,7 @@ const alertType = (props) => {
   }
 };
 
-export const StyledAlert = styled.div`
+export const StyledAlert = styled(motion.div)`
   text-align: center;
   right: 2rem;
   top: 2rem;
@@ -20,29 +20,9 @@ export const StyledAlert = styled.div`
   background: ${(props) => alertType(props)};
   color: #fff;
   opacity: 0.9;
-  &.alert--enter {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  &.alert--enter-active {
-    opacity: 0.9;
-    transform: translateY(2px);
-    transition: all 0.8s ease;
-  }
-
-  &.alert--enter-done {
-    transform: translateY(0px);
-    transition: all 0.1s ease;
-  }
-
-  &.alert--exit-active {
-    opacity: 0;
-    transform: translateY(-30px);
-    transition: all 0.5s;
-  }
 `;
 
-export const AlertContainer = styled(TransitionGroup)`
+export const AlertContainer = styled.div`
   position: fixed;
   top: 60px;
   right: 10px;

@@ -5,6 +5,11 @@ import { logout } from "../../../redux/actions/auth";
 import { clearAlerts } from "../../../redux/actions/alert";
 import { NavBar } from "./Navbar.style";
 
+const navbarVariants = {
+  hidden: { y: "-10vh", opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { type: "spring" } },
+};
+
 const Navbar = () => {
   const { isAuthenticated, loading } = useSelector((state) => state.auth);
   const alert = useSelector((state) => state.alert);
@@ -65,7 +70,7 @@ const Navbar = () => {
   );
 
   return (
-    <NavBar>
+    <NavBar variants={navbarVariants} initial="hidden" animate="visible">
       <h1>
         <NavLink to="/">
           <i className="fas fa-code"></i> DevNetwork

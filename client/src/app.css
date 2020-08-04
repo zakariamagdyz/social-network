@@ -701,27 +701,6 @@ button {
   height: 350px;
 }
 
-.social--enter > * {
-  transform: translateY(-600px);
-}
-.social--enter-active > * {
-  transform: translateY(0);
-  transition: transform 0.5s;
-}
-
-.social--exit > * {
-  transform: translateY(0px);
-}
-.social--exit-active > * {
-  transform: translateY(-600px);
-  transition: transform 0.5s;
-}
-
-.social--exit {
-}
-.social--exit-active {
-}
-
 .aler .btn-primary,
 .bg-primary,
 .badge-primary,

@@ -20,13 +20,10 @@ const Login = () => {
     email: Yup.string().required().email().max(55),
     password: Yup.string().min(6).max(55).required(),
   });
-  const OnSubmit = async (values, actions) => {
-    try {
-      const { email, password } = values;
-      dispatch(LogIn({ email, password }));
-    } finally {
-      actions.setSubmitting(false);
-    }
+  const OnSubmit = (values, actions) => {
+    const { email, password } = values;
+    // send actions to not cause memory leak when component remove from dom
+    dispatch(LogIn({ email, password, actions }));
   };
 
   if (isAuthenticated) {
@@ -52,6 +49,7 @@ const Login = () => {
               type="password"
               label="Password"
             ></FormInput>
+            {console.log(isSubmitting)}
             <FormButton
               disabled={isSubmitting}
               variant="contained"

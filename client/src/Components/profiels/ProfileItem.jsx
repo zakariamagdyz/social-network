@@ -1,6 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
+////////////////////////////////////////////////////////////////
+const profileVariants = {
+  hidden: { x: "100vw", opacity: 0 },
+  visible: { x: 0, opacity: 1, transition: { type: "spring" } },
+  exit: {
+    x: "-100vw",
+    transition: { ease: "easeInOut" },
+  },
+};
+
+//
 const ProfileItem = ({
   user: { _id, name, avatar },
   status,
@@ -9,7 +21,13 @@ const ProfileItem = ({
   location,
 }) => {
   return (
-    <div className="profile bg-light">
+    <motion.div
+      className="profile bg-light"
+      variants={profileVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <img className="round-img" alt="" src={avatar}></img>
       <div>
         <h2>{name}</h2>
@@ -28,7 +46,7 @@ const ProfileItem = ({
           </li>
         ))}
       </ul>
-    </div>
+    </motion.div>
   );
 };
 

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getLikes } from "../../../redux/actions/Posts";
 import Spinner from "../../common/Spinner";
 import {
-  ModalContainer,
   Overlay,
   ModalBox,
   ModalHeader,
@@ -16,6 +15,22 @@ import {
   Liker,
 } from "./Model.style";
 
+////////////////// //////////////////
+
+const overlayVariants = {
+  visible: { opacity: 1 },
+  hidden: { opacity: 0 },
+};
+
+const modalVariants = {
+  hidden: { y: "-100vh", opacity: 0 },
+  visible: {
+    y: "0",
+    opacity: 1,
+    transition: { delay: 0.5 },
+  },
+};
+
 const Modal = ({ postId, toggleModal }) => {
   const dispatch = useDispatch();
   const { allLikes, loadingLikes } = useSelector((state) => state.post);
@@ -23,9 +38,14 @@ const Modal = ({ postId, toggleModal }) => {
     dispatch(getLikes(postId));
   }, []);
   const content = (
-    <ModalContainer>
-      <Overlay onClick={toggleModal} />
-      <ModalBox>
+    <Overlay
+      onClick={toggleModal}
+      variants={overlayVariants}
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+    >
+      <ModalBox variants={modalVariants}>
         <ModalHeader>
           <h1 style={{ color: "#fff" }}>People who likes the post</h1>
         </ModalHeader>
@@ -53,7 +73,7 @@ const Modal = ({ postId, toggleModal }) => {
           </button>
         </ModalFooter>
       </ModalBox>
-    </ModalContainer>
+    </Overlay>
   );
 
   return ReactDOM.createPortal(content, document.getElementById("modal-hook"));

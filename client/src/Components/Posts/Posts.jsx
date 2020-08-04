@@ -5,7 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import PostItem from "./PostItem";
 import PostForm from "./PostForm";
 import Modal from "../layouts/Modal/Modal";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { motion, AnimatePresence } from "framer-motion";
+//////////////
+
+const postsVariants = {
+  hidden: { x: "100vw", opacity: 0 },
+  visible: { x: 0, opacity: 1, transition: { type: "spring" } },
+};
 
 const Posts = () => {
   const [modal, setModal] = useState(false);
@@ -22,40 +28,28 @@ const Posts = () => {
   return loadingAllPosts ? (
     <Spinner />
   ) : (
-    <Fragment>
-      <CSSTransition
-        in={modal}
-        timeout={1000}
-        mountOnEnter
-        unmountOnExit
-        classNames="model-"
-      >
-        <Modal toggleModal={toggleModal} postId={postId} />
-      </CSSTransition>
+    <motion.div variants={postsVariants} initial="hidden" animate="visible">
+      <AnimatePresence>
+        {modal && <Modal toggleModal={toggleModal} postId={postId} />}
+      </AnimatePresence>
 
       <h1 className="large text-primary">Posts</h1>
       <p className="lead">
         <i className="fa fa-users"></i> Welcome to the commuinity
       </p>
       <PostForm />
-      <TransitionGroup className="posts">
+      <AnimatePresence>
         {allPosts.map((post) => (
-          <CSSTransition
+          <PostItem
             key={post._id}
-            timeout={{ enter: 1500, exit: 500 }}
-            classNames="post-"
-            appear
-          >
-            <PostItem
-              {...post}
-              showActions
-              toggleModal={toggleModal}
-              postId={setPostI}
-            />
-          </CSSTransition>
+            {...post}
+            showActions
+            toggleModal={toggleModal}
+            postId={setPostI}
+          />
         ))}
-      </TransitionGroup>
-    </Fragment>
+      </AnimatePresence>
+    </motion.div>
   );
 };
 

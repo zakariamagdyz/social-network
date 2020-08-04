@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
-export const ModalBox = styled.div`
+export const ModalBox = styled(motion.div)`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -34,51 +35,13 @@ export const ModalFooter = styled.div`
   flex-direction: row-reverse;
 `;
 
-export const ModalContainer = styled.div`
+export const Overlay = styled(motion.div)`
   position: fixed;
   top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  &.model--enter {
-    opacity: 0;
-  }
-  &.model--enter-active {
-    opacity: 1;
-    transition: opacity 1s;
-  }
-
-  &.model--enter > ${ModalBox} {
-    transform: scale(0.2);
-  }
-
-  &.model--enter-active > ${ModalBox} {
-    transform: scale(1);
-    transition: transform 1s;
-  }
-
-  &.model--exit {
-    opacity: 1;
-  }
-  &.model--exit-active {
-    opacity: 0;
-    transition: opacity 1s;
-  }
-
-  &.model--exit-active > ${ModalBox} {
-    transform: scale(0);
-    transition: transform 1s;
-  }
-`;
-
-export const Overlay = styled.div`
-  position: absolute;
-  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  background: #000;
-  opacity: 0.6;
+  background: rgba(0, 0, 0, 0.5);
   z-index: 20;
 `;
 

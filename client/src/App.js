@@ -12,9 +12,9 @@ import { useDispatch } from "react-redux";
 import "./app.css";
 import { GlobalStyles } from "./App.style";
 
-if (localStorage.token) {
-  setAuthToken(localStorage.token);
-}
+// if (localStorage.token) {
+//   setAuthToken(localStorage.token);
+// }
 
 const App = () => {
   const dispatch = useDispatch();
