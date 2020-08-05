@@ -25,7 +25,6 @@ const multerStorage = multer.memoryStorage();
 
 exports.resizePhoto = catchAsync(async (req, res, next) => {
   // store file in memory is more efficient than store in disk and read it again by sharp
-  console.log(req.file);
   req.file.path = `${dest}/user-${req.user.id}-${Date.now()}.jpeg`;
   await sharp(req.file.buffer)
     .resize(500, 500)
@@ -64,7 +63,9 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   const selected = selectFields(req.body, "name", "email");
   if (req.file) {
     selected.avatar = req.file.path;
-    fs.unlink(req.user.avatar, (err) => console.log(err));
+    if (!req.user.avatar.includes("default.jpg")) {
+      fs.unlink(req.user.avatar, (err) => console.log(err));
+    }
   }
 
   const user = await User.findByIdAndUpdate(req.user._id, selected, {

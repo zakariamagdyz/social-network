@@ -49,7 +49,6 @@ const Login = () => {
               type="password"
               label="Password"
             ></FormInput>
-            {console.log(isSubmitting)}
             <FormButton
               disabled={isSubmitting}
               variant="contained"

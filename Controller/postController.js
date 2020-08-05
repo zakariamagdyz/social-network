@@ -23,7 +23,7 @@ exports.createAPost = catchAsync(async (req, res, next) => {
     select: "name avatar",
   });
 
-  console.log(query);
+  console.log(newPost);
   res.status(201).json({ status: "success", data: query });
 });
 
@@ -140,18 +140,27 @@ exports.addComment = catchAsync(async (req, res, next) => {
     avatar: req.user.avatar,
     user: req.user.id,
   };
-  const post = await Post.findById(req.params.id);
-  if (!post) return next(new HttpError("There is no post with that ID", 404));
-
-  post.comments.push(commentOptions);
-
-  await post.save();
-  const newpost = await Post.findById(req.params.id).populate({
+  const post = await Post.findByIdAndUpdate(
+    req.params.id,
+    { $push: { comments: commentOptions } },
+    { new: true }
+  ).populate({
     path: "comments.user",
     select: "name avatar",
   });
+  if (!post) return next(new HttpError("There is no post with that ID", 404));
 
-  res.status(200).json({ status: "success", data: newpost });
+  console.log(post);
+
+  // post.comments.push(commentOptions);
+
+  // // await post.save();
+  // // const newpost = await Post.findById(req.params.id).populate({
+  // //   path: "comments.user",
+  // //   select: "name avatar",
+  // // });
+
+  res.status(200).json({ status: "success", data: post });
 });
 
 // remove Comments
@@ -221,6 +230,12 @@ exports.getLikes = catchAsync(async (req, res, next) => {
     path: "likes",
     populate: { path: "user", select: "name avatar" },
   });
+
+  // // or
+  // const post = await Post.findById(req.params.id).populate({
+  //   path: "likes.user",
+  //   select: "name avatar",
+  // });
 
   if (!post) return next(new HttpError("There is no post with that ID", 404));
   return res.status(200).json({

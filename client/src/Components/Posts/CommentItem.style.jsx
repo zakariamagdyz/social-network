@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
-export const CommentContainer = styled.div`
+export const CommentContainer = styled(motion.div)`
   display: flex;
   padding: 10px 20px;
   align-items: center;

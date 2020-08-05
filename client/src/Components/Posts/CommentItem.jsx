@@ -12,11 +12,27 @@ import {
   CommentDelete,
 } from "./CommentItem.style";
 
+////////////
+
+const commentVariant = {
+  hidden: { x: "100vw", opacity: 0 },
+  visible: { x: 0, opacity: 1, transition: { type: "spring" } },
+  exit: {
+    x: "-100vw",
+    transition: { ease: "easeInOut" },
+  },
+};
+
 const CommentItem = ({ comment: { text, date, _id, user }, postId }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   return (
-    <CommentContainer>
+    <CommentContainer
+      variants={commentVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <CommentOwner to={`/profile/${user._id}`}>
         <CommentImage
           className="round-img"

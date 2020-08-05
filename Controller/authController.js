@@ -18,13 +18,14 @@ exports.signUp = catchAsync(async (req, res, next) => {
     "passwordConfirm"
   );
 
-  const avatar = "uploads/images/default.png";
+  const avatar = "uploads/images/default.jpg";
   const data = { avatar, ...bodyData };
 
   const newUser = await User.create(data);
   newUser.password = undefined;
 
   const token = newUser.generateJwtToken();
+  res.cookie("token", token, { httpOnly: true });
   res.status(200).json({ status: "success", data: { data: newUser }, token });
 });
 
@@ -48,19 +49,20 @@ exports.signIn = catchAsync(async (req, res, next) => {
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
-  let token;
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
-    token = req.headers.authorization.split(" ")[1];
-  }
+  let token = req.headers.cookie.split("=")[1];
+  // if (
+  //   req.headers.authorization &&
+  //   req.headers.authorization.startsWith("Bearer")
+  // ) {
+  //   token = req.headers.authorization.split(" ")[1];
+  // }
 
   if (!token) {
     return next(
       new HttpError("You are not logged in, Please login to get access", 401)
     );
   }
+
   const decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   const freshUser = await User.findById(decode.id);
@@ -150,4 +152,9 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   user.save();
   const token = user.generateJwtToken();
   res.status(200).json({ status: "success", data: user, token });
+});
+
+exports.signOut = catchAsync(async (req, res, next) => {
+  res.clearCookie("token");
+  res.status(200).json({ status: "success", data: "logged out successfully" });
 });

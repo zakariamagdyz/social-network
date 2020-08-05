@@ -38,7 +38,7 @@ const Register = () => {
     const { name, email, password, passwordConfirm } = values;
     try {
       await dispatch(
-        register({ name, email, password, passwordConfirm }, actions.setErrors)
+        register({ name, email, password, passwordConfirm }, actions)
       );
     } finally {
       actions.isSubmitting(false);

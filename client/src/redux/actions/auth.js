@@ -19,7 +19,7 @@ export const loadUser = () => async (dispatch) => {
 
 export const register = (
   { name, email, password, passwordConfirm },
-  setErrors
+  actions
 ) => async (dispatch) => {
   const body = JSON.stringify({ name, email, password, passwordConfirm });
 
@@ -28,15 +28,18 @@ export const register = (
       headers: { "Content-Type": "application/json" },
     });
 
+    actions.setSubmitting(false);
     dispatch({ type: authTypes.REGESTIR_SUCCESS, payload: res.data });
     dispatch(loadUser());
   } catch (err) {
+    actions.setSubmitting(false);
     dispatch({ type: authTypes.REGESTIR_FAIL });
     if (err.response.data.message.includes("duplicate")) {
-      setErrors({ email: "Email already exists, Please use another Email" });
-    } else {
-      dispatch(setAlert(err.response.data.message, "danger"));
+      return actions.setErrors({
+        email: "Email already exists, Please use another Email",
+      });
     }
+    dispatch(setAlert(err.response.data.message, "danger"));
   }
 };
 
