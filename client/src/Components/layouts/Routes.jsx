@@ -6,7 +6,6 @@ const Register = lazy(() => import("../auth/Register/Register"));
 const Login = lazy(() => import("../auth/LogIn/Login"));
 const Alert = lazy(() => import("./Alert/Alert"));
 const Dashboard = lazy(() => import("../dashboards/Dashboard"));
-const PrivatRoute = lazy(() => import("../auth/PrivatRoute"));
 const CreateProfile = lazy(() => import("../profile-forms/CreateProfile.jsx"));
 const EditProfile = lazy(() => import("../profile-forms/EditProfile"));
 const AddExperience = lazy(() => import("../profile-forms/AddExperience"));
@@ -16,6 +15,8 @@ const Post = lazy(() => import("../Posts/Post"));
 const Profiles = lazy(() => import("../profiels/Profiles"));
 const Profile = lazy(() => import("../profile/Profile"));
 const NotFound = lazy(() => import("./NotFound"));
+const AdminRoute = lazy(() => import("../auth/AdminRoute"));
+const PrivatRoute = lazy(() => import("../auth/PrivatRoute"));
 
 //
 
@@ -67,6 +68,9 @@ const Routes = () => {
           <PrivatRoute path="/posts/:id">
             <Post />
           </PrivatRoute>
+          <AdminRoute path="/admin">
+            <div>hello admin</div>
+          </AdminRoute>
 
           <Route>
             <NotFound />

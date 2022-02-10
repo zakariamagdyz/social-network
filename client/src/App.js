@@ -11,7 +11,9 @@ import { useDispatch } from "react-redux";
 
 import "./app.css";
 import { GlobalStyles } from "./App.style";
+import axios from "axios";
 
+setInterval(() => console.log(axios.defaults.headers.common), 10000);
 // if (localStorage.token) {
 //   setAuthToken(localStorage.token);
 // }
@@ -22,6 +24,9 @@ const App = () => {
     dispatch(loadUser());
   }, [dispatch]);
 
+  useEffect(() => {
+    console.log(axios.defaults.headers);
+  });
   // history.listen((location) => console.log(location.pathname));
 
   return (

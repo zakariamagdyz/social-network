@@ -6,6 +6,7 @@ import PostItem from "./PostItem";
 import PostForm from "./PostForm";
 import Modal from "../layouts/Modal/Modal";
 import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
 //////////////
 
 const postsVariants = {
@@ -24,6 +25,17 @@ const Posts = () => {
   useEffect(() => {
     dispatch(fetchPosts());
   }, [dispatch]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get("/api/v1/users/auth");
+        console.log(res.data);
+      } catch (error) {
+        console.log(error.data.response.message);
+      }
+    })();
+  }, []);
 
   return loadingAllPosts ? (
     <Spinner />

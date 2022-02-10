@@ -46,7 +46,7 @@ const PostItem = ({
 
       <div className="post__data">
         <p className="my-1">{text}</p>
-        <Moment format="YYYY-MM-DD HH:mm" className="time">
+        <Moment format="YYYY-MM-DD h:mm a" className="time">
           {date}
         </Moment>
       </div>

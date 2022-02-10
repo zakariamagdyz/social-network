@@ -79,7 +79,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteMe = catchAsync(async (req, res, next) => {
-  const user = await User.findByIdAndUpdate(
+  await User.findByIdAndUpdate(
     req.user._id,
     { active: false },
     {
@@ -88,7 +88,7 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
     }
   );
 
-  await Profile.findOneAndDelete({ user: req.user._id });
+  //await Profile.findOneAndDelete({ user: req.user._id });
   res.status(204).json({ status: "success" });
 });
 

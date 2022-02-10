@@ -4,14 +4,14 @@ const validator = require("validator");
 const profileSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.ObjectId, ref: "user" },
-    company: { type: String, maxLength: 55 },
-    location: { type: String, maxLength: 55 },
+    company: { type: String, maxlength: 55 },
+    location: { type: String, maxlength: 55 },
     website: {
       type: String,
-      maxLength: 55,
+      maxlength: 55,
       validate: [validator.isURL, "Please provide a valid url"],
     },
-    status: { type: String, maxLength: 55 },
+    status: { type: String, maxlength: 55 },
     skills: {
       type: [String],
       validate: {

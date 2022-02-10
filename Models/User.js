@@ -7,14 +7,15 @@ const crypto = require("crypto");
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    minLength: 2,
-    maxLength: 55,
+    minlength: 2,
+    maxlength: 55,
     required: [true, "Please provide your name"],
+    trim: true,
   },
   email: {
     type: String,
-    minLength: 5,
-    maxLength: 55,
+    minlength: 5,
+    maxlength: 55,
     required: [true, "Please provide your email"],
     unique: true,
     lowercase: true,
@@ -24,7 +25,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide your password"],
     minlength: 8,
-    maxLength: 55,
+    maxlength: 55,
     select: false,
   },
   passwordConfirm: {

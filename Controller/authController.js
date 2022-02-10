@@ -25,7 +25,6 @@ exports.signUp = catchAsync(async (req, res, next) => {
   newUser.password = undefined;
 
   const token = newUser.generateJwtToken();
-  res.cookie("token", token, { httpOnly: true });
   res.status(200).json({ status: "success", data: { data: newUser }, token });
 });
 
@@ -44,24 +43,25 @@ exports.signIn = catchAsync(async (req, res, next) => {
 
   const token = currentUser.generateJwtToken();
   this.password = undefined;
-  res.cookie("token", token, { httpOnly: true });
   res.status(200).json({ status: "success", token, data: currentUser });
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
-  let token = req.headers.cookie.split("=")[1];
-  // if (
-  //   req.headers.authorization &&
-  //   req.headers.authorization.startsWith("Bearer")
-  // ) {
-  //   token = req.headers.authorization.split(" ")[1];
-  // }
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
 
   if (!token) {
     return next(
       new HttpError("You are not logged in, Please login to get access", 401)
     );
   }
+
+  // let token = req.headers.cookie.split("=")[1];
 
   const decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
@@ -70,6 +70,9 @@ exports.protect = catchAsync(async (req, res, next) => {
     return next(
       new HttpError("The user belonging to this token is no longer exists", 401)
     );
+
+  console.log(token);
+  console.log(freshUser);
 
   if (freshUser.passwordChangedAfter(decode.iat))
     return next(
@@ -80,14 +83,16 @@ exports.protect = catchAsync(async (req, res, next) => {
   next();
 });
 
-exports.restrictTo = (...roles) => (req, res, next) => {
-  if (!roles.includes(req.user.role))
-    return next(
-      new HttpError("You dont have permission to perform this action", 403)
-    );
+exports.restrictTo =
+  (...roles) =>
+  (req, res, next) => {
+    if (!roles.includes(req.user.role))
+      return next(
+        new HttpError("You dont have permission to perform this action", 403)
+      );
 
-  next();
-};
+    next();
+  };
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   const currentUser = await User.findOne({ email: req.body.email });
@@ -155,6 +160,6 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 });
 
 exports.signOut = catchAsync(async (req, res, next) => {
-  res.clearCookie("token");
+  // res.clearCookie("token");
   res.status(200).json({ status: "success", data: "logged out successfully" });
 });

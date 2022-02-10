@@ -71,7 +71,7 @@ const AddEducation = () => {
               <FormControl control="datepicker" name="from" label="From Date" />
 
               <Field name="current">
-                {({ field }) => {
+                {({ field, meta }) => {
                   return (
                     <CurrentContainer>
                       <input type="checkbox" id="current" {...field} />

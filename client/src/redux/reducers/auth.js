@@ -20,9 +20,10 @@ export default (state = INITAL_STATE, action) => {
 
     case authTypes.REGESTIR_SUCCESS:
     case authTypes.LOGIN_SUCCESS:
-      localStorage.setItem("token", "123");
+      localStorage.setItem("token", action.payload.token);
       return {
         ...state,
+        token: action.payload.token,
         user: action.payload.data,
         isAuthenticated: true,
         loading: false,

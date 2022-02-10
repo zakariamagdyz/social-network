@@ -29,7 +29,7 @@ router
   .route("/auth")
   .get(userController.addMeToParams, userController.getAUser);
 
-router.use(authController.restrictTo("admin"));
+// router.use(authController.restrictTo("admin"));
 
 router
   .route("/")
