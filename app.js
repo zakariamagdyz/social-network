@@ -6,6 +6,7 @@ const userRouter = require("./Routes/userRoutes");
 const profileRouter = require("./Routes/profileRoutes");
 const postRouter = require("./Routes/postRoutes");
 const path = require("path");
+const compression = require("compression");
 const fs = require("fs");
 
 const app = express();
@@ -15,6 +16,8 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use(express.json());
+
+app.use(compression());
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/profiles", profileRouter);
