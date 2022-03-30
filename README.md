@@ -6,6 +6,7 @@ Developed dev-network social app worked on the UI and Backend , deploy and teste
 
 - CRUD operations
 - Authentication & Authorization 🔒
+- Upload photos
 
 ## Technologys
 
