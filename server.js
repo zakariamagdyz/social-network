@@ -8,9 +8,12 @@ process.on("uncaughtException", (err) => {
 
 const app = require("./app");
 
-const db =
-  process.env.MONGO_URI ||
-  `mongodb+srv://zakariaDevConnector:${process.env.DATABASE_PASSWORD}@devconnector-eoyey.mongodb.net/${process.env.DATABASE_NAME}?retryWrites=true&w=majority`;
+const dbURI = process.env.DATABASE_URI.replace(
+  /<password>/,
+  process.env.DATABASE_PASSWORD
+);
+
+const db = process.env.MONGO_URI || dbURI;
 
 mongoose
   .connect(db, {
@@ -23,7 +26,9 @@ mongoose
 
 const port = process.env.PORT || 5000;
 
-const server = app.listen(port);
+const server = app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
 
 process.on("unhandledRejection", (err) => {
   console.log(`${err.name} : ${err.message} /n ${err.stack}`);

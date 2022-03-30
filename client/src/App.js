@@ -13,7 +13,6 @@ import "./app.css";
 import { GlobalStyles } from "./App.style";
 import axios from "axios";
 
-setInterval(() => console.log(axios.defaults.headers.common), 10000);
 // if (localStorage.token) {
 //   setAuthToken(localStorage.token);
 // }
