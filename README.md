@@ -1,6 +1,6 @@
 # Dev-network is a social network app for developes 🎉🎈🌏🎤
 
-Developed dev-network social app worked on the UI and Backend , deploy and tested app on [Dev-network App](https://dev-connector-zakaria.herokuapp.com/)
+Developed dev-network social app worked on the UI and Backend , deployed and tested app on [Dev-network App](https://dev-connector-zakaria.herokuapp.com/)
 
 ## Features:
 
