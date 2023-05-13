@@ -1,0 +1,2 @@
+(this.webpackJsonpclient=this.webpackJsonpclient||[]).push([[19],{328:function(e,t,n){"use strict";n.r(t);var a=n(0),r=n.n(a),c=n(22),i=n(4),u=n(53);t.default=function(e){var t=Object(c.c)((function(e){return e.auth})),n=t.isAuthenticated,a=t.token,l=t.user,o=t.loading;return r.a.createElement(i.b,e,o&&a?r.a.createElement(u.a,null):n&&"admin"===l.role?e.children:r.a.createElement(i.a,{to:"/error"}))}}}]);
+//# sourceMappingURL=19.0d21576f.chunk.js.map
